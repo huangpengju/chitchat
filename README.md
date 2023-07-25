@@ -61,7 +61,7 @@ files := http.FileServer(http.Dir("/public"))
 mux.Handle("/static/",http.StripPrefix("/static/",files))
 ```
 当服务器接收到一个以/static/开头的 URL 请求时，以上两行代码会移除 URL 中的/static/字符串，然后在 public 目录中查找被请求的文件。比如说，当服务器接收到一个针对文件` http://localhost/static/css/bootstrap.min.css `的请求时，它将会在 public 目录中查找以下文件：  
-`<application root>/css/bootstrap.min.css` 
+`<application root>/css/bootstrap.min.css`  
 当服务器成功地找到这个文件之后，会把它返回给客户端。
 
 ## 技能清单
