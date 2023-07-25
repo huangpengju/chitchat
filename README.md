@@ -41,7 +41,7 @@ Web 应用的工作流程如下：
 
 ### 多路复用器
 1. `net/http` 标准库提供了一个默认的`多路复用器`，这个`多路复用器`可以通过调用NewServeMux 函数来创建：  
-```bash
+```
 mux := http.NewServeMux()
 ```
 
