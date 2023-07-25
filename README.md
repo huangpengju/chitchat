@@ -44,7 +44,25 @@ Web 应用的工作流程如下：
 ```bash
 mux := http.NewServeMux()
 ```
+2. 为了将发送至根 URL 的请求重定向到处理器，可以使用`HandleFunc`函数:
+```bash
+mux.HandleFunc("/",index)
+```
+HandleFunc 函数接受一个 URL 和一个处理器的名字作为参数，并将针对给定 URL 的请求转发至指定的处理器函数进行处理，因此对上述调用来说，当有针对根 URL 的请求到达时，该请求就会重定向到名为 index 的处理器函数。  
+此外，因为所有处理器都接受一个 ResponseWrite 和一个指向 Request 结构的指针作为参数，并且所有请求参数都可以通过访问 Request 结构得到，所以程序并不需要向处理器显式地传入任何请求参数。
 
+注意：尽管处理器和处理器函数提供的最终结果是一样的，但它们实际上并不相同。
+### 服务静态文件
+1. `多路复用器`还需要为静态文件提供服务。
+2. FileServer 函数创建了一个能够为指定目录中的静态文件服务的处理器，并将这个处理器传递给了`多路复用器`的 Handle 函数。
+3. StripPrefix 函数可以移除请求 URL 中的指定前缀：
+```bash
+files := http.FileServer(http.Dir("/public"))
+mux.Handle("/static/",http.StripPrefix("/static/",files))
+```
+当服务器接收到一个以/static/开头的 URL 请求时，以上两行代码会移除 URL 中的/static/字符串，然后在 public 目录中查找被请求的文件。比如说，当服务器接收到一个针对文件` http://localhost/static/css/bootstrap.min.css `的请求时，它将会在 public 目录中查找以下文件：  
+`<application root>/css/bootstrap.min.css` 
+当服务器成功地找到这个文件之后，会把它返回给客户端。
 
 ## 技能清单
 1. 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
