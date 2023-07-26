@@ -65,7 +65,7 @@ mux.Handle("/static/",http.StripPrefix("/static/",files))
 当服务器成功地找到这个文件之后，会把它返回给客户端。
 ### 创建处理器函数
 ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
-* 处理器函数实际上就是一个接受 ResponseWriter 和 Request 指针作为参数的 Go 函数。
+* 处理器函数实际上就是一个接受` ResponseWriter `和` Request `指针作为参数的 Go 函数。
 
 
 ## 技能清单
