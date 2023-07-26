@@ -2,6 +2,7 @@ package main
 
 import (
 	"chitchat/data"
+	"chitchat/routes"
 	"net/http"
 	"text/template"
 )
@@ -19,9 +20,12 @@ func main() {
 	// StripPrefix 会把 URL中 /static/ 去除后  再让 files 处理器处理请求
 	mux.Handle("/static/", http.StripPrefix("/static/", files))
 
+	// index
 	// 把给定的 URL 请求转发至 index 处理器函数
 	mux.HandleFunc("/", index)
-	// mux.HandleFunc("/err", err)
+	// error
+	// 用户登录显示私人模板，未登录显示公共模板
+	mux.HandleFunc("/err", routes.Err)
 
 	// mux.HandleFunc("/login",login)
 	// mux.HandleFunc("/logout",logout)
