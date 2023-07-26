@@ -2,7 +2,6 @@ package main
 
 import (
 	"chitchat/data"
-	"fmt"
 	"net/http"
 	"text/template"
 )
@@ -22,6 +21,19 @@ func main() {
 
 	// 把给定的 URL 请求转发至 index 处理器函数
 	mux.HandleFunc("/", index)
+	// mux.HandleFunc("/err", err)
+
+	// mux.HandleFunc("/login",login)
+	// mux.HandleFunc("/logout",logout)
+	// mux.HandleFunc("/signup",signup)
+	// mux.HandleFunc("/signup_account",signupAccount)
+	// mux.HandleFunc("/authenticate",authenticate)
+
+	// mux.HandleFunc("/thread/new",newThread)
+	// mux.HandleFunc("/thread/create",createThread)
+	// mux.HandleFunc("/thread/post",postThread)
+	// mux.HandleFunc("/thread/read",readThread)
+
 	server := &http.Server{
 		Addr:    ":8080",
 		Handler: mux,
@@ -41,15 +53,13 @@ func index(w http.ResponseWriter, r *http.Request) {
 	// 创建一个模板，并解析 files 指定的文件里的模板定义，
 	// 返回的模板的名字是第一个文件的文件名（不含扩展名）,内容为解析后的第一个文件的内容。
 	// Must 用于包装返回 模板指针
-	name, _ := template.ParseFiles(files...)
-	fmt.Println("file=", name)
 	templates := template.Must(template.ParseFiles(files...))
-	fmt.Println("templates=======", templates)
 
+	// 查询所有帖子
 	threads, err := data.Threads()
 	if err != nil {
 		return
 	}
-	// 让 templates 关联的名为 layout 模板产生输出 threads
+	// 让 templates 关联的名为 layout 模板产生输出 threads 帖子
 	templates.ExecuteTemplate(w, "layout", threads)
 }
