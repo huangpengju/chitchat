@@ -2,6 +2,7 @@
 // 包中 Login 显示登录页面
 // 包中 Logout 注销用户,从数据库中删除session会话
 // 包中 Signup 显示注册页面
+// 包中 SignupAccout 创建用户账户
 package routes
 
 import (
@@ -50,4 +51,32 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	// 解析HTML模板
 	// 传入一个文件名列表(登录页框架、公共导航条、注册form表单)，并获得一个模板
 	utils.GenerateHTML(w, nil, "login.layout", "public.navbar", "signup")
+}
+
+// POST /signup
+// 创建用户帐户
+func SignupAccount(w http.ResponseWriter, r *http.Request) {
+	// 对于POST或PUT请求，ParseForm还会将body当作表单解析，并将结果既更新到r.PostForm也更新到r.Form。
+	err := r.ParseForm()
+	if err != nil {
+		utils.Danger(err, "无法分析表单")
+	}
+
+	// Id       int
+	// Uuid     string
+	// Name     string
+	// Email    string
+	// Password string
+	// CreateAt time.Time
+	user := data.User{
+		// PostFormValue返回name为键查询r.PostForm字段得到结果[]string切片的第一个值。
+		Name:     r.PostFormValue("name"),
+		Email:    r.PostFormValue("email"),
+		Password: r.PostFormValue("password"),
+	}
+	if err := user.Create(); err != nil {
+		utils.Danger(err, "无法创建用户")
+	}
+	// Redirect回复请求一个重定向地址urlStr和状态码code。该重定向地址可以是相对于请求r的相对地址。
+	http.Redirect(w, r, "/login", 302)
 }

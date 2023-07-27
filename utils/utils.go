@@ -3,6 +3,7 @@
 // 包中 ParseTemplateFiles 解析登录页的HTML模板
 // 包中 GenerateHTML 生成注册页的HTML
 // 包中 Warning 函数输出 警告相关的日志
+// 包中 Danger 函数输出风险相关日志
 package utils
 
 import (
@@ -89,10 +90,16 @@ func GenerateHTML(w http.ResponseWriter, data interface{}, filesname ...string) 
 	templates.ExecuteTemplate(w, "layout", data)
 }
 
-// Warning 函数输出 警告相关的日志
+// Warning 函数输出警告相关的日志
 func Warning(args ...interface{}) {
 	// 设置logger的输出前缀。
 	logger.SetPrefix("WARNING")
 	// Println调用l.Output将生成的格式化字符串输出到logger，参数用和fmt.Println相同的方法处理。
+	logger.Println(args...)
+}
+
+// Danger 函数输出风险相关日志
+func Danger(args ...interface{}) {
+	logger.SetPrefix("ERROR")
 	logger.Println(args...)
 }

@@ -1,9 +1,20 @@
 // data 包的 user.go 用于数据库交互用户相关数据
 // 包中 Check 检查会话在数据库中是否有效
-// 包中 DeleteByUUID 从数据库中删除会话
+// 包中 DeleteByUUID 从数据库sessions表中删除会话
+// 包中 Create 创建一个新用户，将用户信息保存到数据库中
 package data
 
 import "time"
+
+// User 表示论坛用户的账户
+type User struct {
+	Id       int
+	Uuid     string
+	Name     string
+	Email    string
+	Password string
+	CreateAt time.Time
+}
 
 // Session 表示论坛用户当前的登录会话
 type Session struct {
@@ -35,7 +46,7 @@ func (session *Session) Check() (valid bool, err error) {
 	return
 }
 
-// DeleteByUUID 从数据库中删除会话
+// DeleteByUUID 从数据库sessions表中删除会话
 // 方法接收者是Session结构体
 // 方法返回值err
 func (session *Session) DeleteByUUID() (err error) {
@@ -50,5 +61,28 @@ func (session *Session) DeleteByUUID() (err error) {
 	defer stmt.Close()
 	// Exec使用提供的参数执行准备好的命令状态，返回Result类型的该状态执行结果的总结。
 	_, err = stmt.Exec(session.Uuid)
+	return
+}
+
+// Create 创建一个新用户，将用户信息保存到数据库中
+// 方法接收者是User结构体
+// 方法返回值err
+func (user *User) Create() (err error) {
+	// Postgres不会自动返回最后一个插入id，因为这样假设是错误的
+	// 你总是使用一个序列。您需要在insert中使用 returning 关键字来获得这个
+	// 来自postgres的信息。
+	// 准备SQL命令语句
+	statement := "insert into users (uuid,name,email,password,created_at) values($1,$2,$3,$4,$5) returning id,uuid,created_at"
+	// Prepare()创建一个准备好的状态
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		return
+	}
+	// Close关闭状态。
+	defer stmt.Close()
+	// QueryRow使用提供的参数执行准备好的查询状态
+	// 使用QueryRow返回一行，并将返回的id扫描到User结构中
+	// createUUID()随机生成uuid,Encrypt()加密密码
+	err = stmt.QueryRow(createUUID(), user.Name, user.Email, Encrypt(user.Password), user.CreateAt).Scan(&user.Id, &user.Uuid, &user.CreateAt)
 	return
 }
