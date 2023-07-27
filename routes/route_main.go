@@ -12,11 +12,14 @@ func Err(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("这里是err")
 	fmt.Println("r===", r)
 	fmt.Println("r.URL===", r.URL)
-	fmt.Println("r.URL。Path===", r.URL.Path)
+	fmt.Println("r.URL.Path===", r.URL.Path)
 	fmt.Println("r.URL.Query()===", r.URL.Query()) // map[] 空的映射  // map[string][]string
 	// URL类型代表一个解析后的URL（或者说，一个URL参照）。URL基本格式如下：scheme://[userinfo@]host/path[?query][#fragment]
 	// Query方法解析RawQuery字段并返回其表示的Values类型键值对。
-	//  RawQuery string // 编码后的查询字符串，没有'?'
+	// 而对于 字段 RawQuery string  它表示URL中的： 编码后的query，没有'?'
+	// 比如：http:baidu.com/search?title=aa&id=1,其RawQuery是"title=aa&id=1"
+	// Query方法解析RawQuery字段并返回其表示的Values类型键值对。map[id:[1] title:[aa]]
+
 	// vals := r.URL.Query()
 
 	// 查询Session会话
