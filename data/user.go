@@ -1,4 +1,6 @@
-// data 是数据包
+// data 包的 user.go 用于数据库交互用户相关数据
+// 包中 Check 检查会话在数据库中是否有效
+// 包中 DeleteByUUID 从数据库中删除会话
 package data
 
 import "time"

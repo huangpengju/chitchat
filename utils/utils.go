@@ -1,5 +1,5 @@
 // utils 是一个工具类的包
-// 包中 Session 处理Session会话
+// 包中 Session 检查 cookie 和数据库中 Session 会话记录
 // 包中 ParseTemplateFiles 解析登录页的HTML模板
 // 包中 GenerateHTML 生成注册页的HTML
 // 包中 Warning 函数输出 警告相关的日志
@@ -17,24 +17,28 @@ import (
 // 定义全局变量 logger 日志记录器
 var logger *log.Logger
 
-// Session 处理器函数，检查用户是否已登录，已登陆是否有会话，如果没有，则err不为nil
+// Session 处理器函数
 // 返回值 Session 会话 和 err
-// 先判断cookie，cookie不存在，用户未登录 err 为 http: named cookie not present（cookie没找到时）
-// cookie存在，用户已登录，那么Session函数将继续进行第二项检查
+// 如果cookie不存在，那么很明显用户并未登陆,用户未登录 err 为 http: named cookie not present（cookie没找到时）
+// 如果cookie存在，那么Session函数将继续进行第二项检查,访问数据库并核实会话的唯一ID是否存在。
 func Session(w http.ResponseWriter, r *http.Request) (sess data.Session, err error) {
 	// Cookie()返回请求中名为 _cookie 的cookie,如果未找到该cookie会返回nil和ErrNoCookie。
 	// var ErrNoCookie = errors.New("http: named cookie not present") / http:命名cookie不存在
 	// 如果找到了，返回*cookie 和 nil
 	cookie, err := r.Cookie("_cookie")
-	// 找到cookie 后，判断Session会话（第2项检查）
+
+	// cookie存在，用户已登录，那么Session函数将继续进行第二项检查
 	if err == nil {
-		// Session 表示论坛用户当前的登录会话
-		// 把cookie中的value赋值给Session的Uuid，当作查询数据库的条件
+		// Session 是登录会话结构体
+		// 给Session结构体重的 Uuid 字段赋值
+		// 把cookie中的value赋值给Session的Uuid，用作查询数据库的条件
 		sess = data.Session{Uuid: cookie.Value}
-		// Session存在时 err 依然是 nil
-		// Session不存在时 err 返回errors.New("无效会话")
-		// Check 查询sessions会话表,返回 true或者false
+
+		// Check 检查会话在数据库中是否有效
+		// 会话有效返回 true
+		// 会话无效返回 false
 		if ok, _ := sess.Check(); !ok {
+			// 用户登录，但是会话无效时，设置返回值 err 的值
 			err = errors.New("无效会话")
 		}
 	}

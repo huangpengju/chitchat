@@ -1,3 +1,5 @@
+// data 包的 thread.go 用于数据库交互帖子相关数据
+// 包中 Threads 获取数据库中所有的帖子并返回
 package data
 
 import "time"

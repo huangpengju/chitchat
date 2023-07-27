@@ -1,4 +1,4 @@
-// routes包中的route_auth.go 用于授权相关的处理
+// routes 包的 route_auth.go 用于授权相关的处理
 // 包中 Login 显示登录页面
 // 包中 Logout 注销用户,从数据库中删除session会话
 // 包中 Signup 显示注册页面

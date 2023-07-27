@@ -1,3 +1,5 @@
+// data 包的 data.go 用于数据库配置
+// 包中 init 初始化数据库配置
 package data
 
 import (
