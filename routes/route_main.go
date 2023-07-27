@@ -8,6 +8,7 @@ import (
 
 // GET/err?msg=
 // Err 显示错误消息页面
+// 判断用户是否登陆（检查cookie和session会话）
 func Err(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("这里是err")
 	fmt.Println("r===", r)
@@ -23,6 +24,8 @@ func Err(w http.ResponseWriter, r *http.Request) {
 	// vals := r.URL.Query()
 
 	// 查询Session会话
+	// 如果cookie不存在，那么很明显用户并未登陆
+	// 如果cookie存在，那么Session函数将继续进行第二项检查,访问数据库并核实会话的唯一ID是否存在。
 	// _, err := utils.Session(w, r) // 返回 Session 会话 和 err
 	// cookie存在，并且Session会话在数据库中时，err 为nil
 	// err 为nil 时表示已登录，加载 私人模板
