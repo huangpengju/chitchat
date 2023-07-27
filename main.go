@@ -39,8 +39,9 @@ func main() {
 	mux.HandleFunc("/login", routes.Login)
 	// logout 注销用户，根据cookie删除session会话
 	mux.HandleFunc("/logout", routes.Logout)
+	// signup 加载注册页面
+	mux.HandleFunc("/signup", routes.Signup)
 
-	// mux.HandleFunc("/signup",signup)
 	// mux.HandleFunc("/signup_account",signupAccount)
 	// 用户登录成功，标示登陆状态（写入cookie）
 	// mux.HandleFunc("/authenticate",authenticate)

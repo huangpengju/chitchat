@@ -1,4 +1,5 @@
-// routes 是路由包
+// routes包中的route_main.go 用于授权相关的处理
+// 包中 Err 显示错误消息页面
 package routes
 
 import (

@@ -1,4 +1,7 @@
-// routes包中的route_auth用于授权等处理
+// routes包中的route_auth.go 用于授权相关的处理
+// 包中 Login 显示登录页面
+// 包中 Logout 注销用户,从数据库中删除session会话
+// 包中 Signup 显示注册页面
 package routes
 
 import (
@@ -14,7 +17,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	// 传入一个文件名列表(登录页框架、公共导航条、登录form表单)，并获得一个模板
 	t := utils.ParseTemplateFiles("login.layout", "public.navbar", "login")
 	// Execute方法接受两个参数
-	// 将解析好的模板应用到指定的数据对象 nil ,并将输出写入 w
+	// 将解析好的模板应用到指定的数据对象(这里是nil) ,并将输出写入 w
 	// 如果在执行模板或写输出时出错，
 	// 执行停止，但是部分结果可能已经被写入
 	// 输出写入器。
@@ -39,4 +42,12 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		session.DeleteByUUID()
 	}
 	utils.Warning(err, "获取cookie失败")
+}
+
+// GET /signup
+// 显示注册页面
+func Signup(w http.ResponseWriter, r *http.Request) {
+	// 解析HTML模板
+	// 传入一个文件名列表(登录页框架、公共导航条、注册form表单)，并获得一个模板
+	utils.GenerateHTML(w, nil, "login.layout", "public.navbar", "signup")
 }
