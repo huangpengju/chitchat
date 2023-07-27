@@ -37,8 +37,9 @@ func main() {
 	// 在 routes 包中的 route_auth.go 中定义
 	// login 加载登录页面
 	mux.HandleFunc("/login", routes.Login)
+	// logout 注销用户，根据cookie删除session会话
+	mux.HandleFunc("/logout", routes.Logout)
 
-	// mux.HandleFunc("/logout",logout)
 	// mux.HandleFunc("/signup",signup)
 	// mux.HandleFunc("/signup_account",signupAccount)
 	// 用户登录成功，标示登陆状态（写入cookie）

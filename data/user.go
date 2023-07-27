@@ -12,8 +12,7 @@ type Session struct {
 	CreatedAt time.Time
 }
 
-// Check
-// 检查会话在数据库中是否有效
+// Check 检查会话在数据库中是否有效
 // 方法接收者是Session结构体
 // 方法返回值valid = false 表示会话无效;valid=ture 表示有效
 func (session *Session) Check() (valid bool, err error) {
@@ -31,5 +30,23 @@ func (session *Session) Check() (valid bool, err error) {
 	if session.Id != 0 {
 		valid = true
 	}
+	return
+}
+
+// DeleteByUUID 从数据库中删除会话
+// 方法接收者是Session结构体
+// 方法返回值err
+func (session *Session) DeleteByUUID() (err error) {
+	// 准备删除sessions表中数据的-SQL语句命令
+	statement := "delete from sessions where uuid=$1"
+	// Prepare创建一个准备好的状态用于之后的查询和命令。返回值可以同时执行多个查询和命令。
+	stmt, err := Db.Prepare(statement)
+	if err != nil {
+		return
+	}
+	// Close关闭状态。
+	defer stmt.Close()
+	// Exec使用提供的参数执行准备好的命令状态，返回Result类型的该状态执行结果的总结。
+	_, err = stmt.Exec(session.Uuid)
 	return
 }

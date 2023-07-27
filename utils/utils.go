@@ -5,8 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 )
+
+// 定义全局变量 logger 日志记录器
+var logger *log.Logger
 
 // session 处理器函数，检查用户是否已登录，已登陆是否有会话，如果没有，则err不为nil
 // 返回值 Session 会话 和 err
@@ -52,4 +56,11 @@ func ParseTemplateFiles(finenames ...string) (t *template.Template) {
 	// Must函数用于包装(*Template, error)返回*template，它会在err非nil时panic，一般用于变量初始化：
 	t = template.Must(t.ParseFiles(files...))
 	return
+}
+
+func Warning(args ...interface{}) {
+	// 设置logger的输出前缀。
+	logger.SetPrefix("WARNING")
+	// Println调用l.Output将生成的格式化字符串输出到logger，参数用和fmt.Println相同的方法处理。
+	logger.Println(args...)
 }
