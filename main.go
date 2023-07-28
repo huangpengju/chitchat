@@ -43,8 +43,8 @@ func main() {
 	mux.HandleFunc("/signup", routes.Signup)
 	// signupAccount 创建用户账户
 	mux.HandleFunc("/signup_account", routes.SignupAccount)
-	// 用户登录成功，标示登陆状态（写入cookie）
-	// mux.HandleFunc("/authenticate",authenticate)
+	// Authenticate 用户登录（登录成功创建 session 和 cookie）
+	mux.HandleFunc("/authenticate", routes.Authenticate)
 
 	// mux.HandleFunc("/thread/new",newThread)
 	// mux.HandleFunc("/thread/create",createThread)
