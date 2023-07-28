@@ -56,12 +56,14 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 // POST /signup
 // 创建用户帐户
 func SignupAccount(w http.ResponseWriter, r *http.Request) {
-	// 对于POST或PUT请求，ParseForm还会将body当作表单解析，并将结果既更新到r.PostForm也更新到r.Form。
+	// ParseForm解析URL中的查询字符串，并将解析结果更新到r.Form字段。
+	// 对于POST或PUT请求，ParseForm还会将body当作表单解析
+	// 并将结果既更新到r.PostForm也更新到r.Form。
 	err := r.ParseForm()
 	if err != nil {
 		utils.Danger(err, "无法分析表单")
 	}
-
+	// User结构
 	// Id       int
 	// Uuid     string
 	// Name     string
@@ -69,14 +71,21 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	// Password string
 	// CreateAt time.Time
 	user := data.User{
-		// PostFormValue返回name为键查询r.PostForm字段得到结果[]string切片的第一个值。
+		// PostFormValue返回name、email、password为键
+		// 查询r.PostForm字段(本字段只有在调用ParseForm后才有效,上面代码已调用)
+		// 得到结果 []string切片的第一个值，并赋值给 User结构中的字段
 		Name:     r.PostFormValue("name"),
 		Email:    r.PostFormValue("email"),
 		Password: r.PostFormValue("password"),
 	}
+	// Create 创建一个新用户，将用户信息保存到数据库中
+	// 创建失败 返回 err (err不为nil)
 	if err := user.Create(); err != nil {
 		utils.Danger(err, "无法创建用户")
 	}
-	// Redirect回复请求一个重定向地址urlStr和状态码code。该重定向地址可以是相对于请求r的相对地址。
-	http.Redirect(w, r, "/login", 302)
+	// 账号注册成功，跳转到登录页
+	// Redirect回复请求一个重定向地址urlStr和状态码code。
+	// 该重定向地址可以是相对于请求r的相对地址。
+	// http.StatusFound 是302 表示建立连接状态 //向IANA注册的HTTP状态代码。
+	http.Redirect(w, r, "/login", http.StatusFound)
 }
