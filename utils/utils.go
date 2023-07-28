@@ -1,7 +1,7 @@
 // utils 是一个工具类的包
-// 包中 Session 检查 cookie 和数据库中 Session 会话记录
+// 包中 Session 检查用户是否登录并有会话，如果不是，err不是nil
 // 包中 ParseTemplateFiles 解析登录页的HTML模板
-// 包中 GenerateHTML 生成注册页的HTML
+// 包中 GenerateHTML 根据参数生成 HTML 页面
 // 包中 Warning 函数输出 警告相关的日志
 // 包中 Danger 函数输出风险相关日志
 package utils
@@ -18,7 +18,7 @@ import (
 // 定义全局变量 logger 日志记录器
 var logger *log.Logger
 
-// Session 处理器函数
+// Session 检查用户是否登录并有会话，如果不是，err不是nil
 // 返回值 Session 会话 和 err
 // 如果cookie不存在，那么很明显用户并未登陆,用户未登录 err 为 http: named cookie not present（cookie没找到时）
 // 如果cookie存在，那么Session函数将继续进行第二项检查,访问数据库并核实会话的唯一ID是否存在。
@@ -68,7 +68,7 @@ func ParseTemplateFiles(finenames ...string) (t *template.Template) {
 	return
 }
 
-// generateHTML 生成注册页的HTML
+// generateHTML 根据参数生成 HTML 页面
 func GenerateHTML(w http.ResponseWriter, data interface{}, filesname ...string) {
 	// 声明一个 string 类型的切片
 	var files []string

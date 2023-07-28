@@ -2,8 +2,8 @@
 // 包中 Check 检查会话在数据库中是否有效
 // 包中 DeleteByUUID 从数据库sessions表中删除会话
 // 包中 Create 创建一个新用户，将用户信息保存到数据库中
-// 包中 UserByEmail 获取给定电子邮件的单个用户
-// 包中 CreateSession 为现有用户创建一个会话
+// 包中 UserByEmail 从数据库中获取给定电子邮件的单个用户
+// 包中 CreateSession 为现有用户创建一个会话，将用户会话保存到数据库中
 package data
 
 import "time"

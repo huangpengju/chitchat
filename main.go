@@ -46,7 +46,9 @@ func main() {
 	// Authenticate 用户登录（登录成功创建 session 和 cookie）
 	mux.HandleFunc("/authenticate", routes.Authenticate)
 
-	// mux.HandleFunc("/thread/new",newThread)
+	// 在 routes 包中的 route_thread.go 中定义
+	// NewThread 显示发布帖子表单页面
+	mux.HandleFunc("/thread/new", routes.NewThread)
 	// mux.HandleFunc("/thread/create",createThread)
 	// mux.HandleFunc("/thread/post",postThread)
 	// mux.HandleFunc("/thread/read",readThread)
