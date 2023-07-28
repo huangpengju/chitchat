@@ -4,6 +4,7 @@
 // 包中 Create 创建一个新用户，将用户信息保存到数据库中
 // 包中 UserByEmail 从数据库中获取给定电子邮件的单个用户
 // 包中 CreateSession 为现有用户创建一个会话，将用户会话保存到数据库中
+// 包中 User 从会话中获取用户
 package data
 
 import "time"
@@ -100,8 +101,8 @@ func UserByEmail(email string) (user User, err error) {
 }
 
 // CreateSession 为现有用户创建一个会话
-// 方法的接受者是 user
-// 方法返回 err
+// 方法的接收者是 user
+// 方法返回 session 和 err
 func (user *User) CreateSession() (session Session, err error) {
 	// 准备SQL语句
 	statement := "insert into sessions (uuid,email,user_id,created_at) values($1,$2,$3,$3) returning id,uuid,email,user_id,created_at"
@@ -114,5 +115,17 @@ func (user *User) CreateSession() (session Session, err error) {
 	defer stmt.Close()
 	// 使用QueryRow返回一行，并将返回的id扫描到Session结构中
 	err = stmt.QueryRow(createUUID(), user.Email, user.Id, time.Now()).Scan(&session.Id, &session.Uuid, &session.Email, &session.UserId, &session.CreatedAt)
+	return
+}
+
+// User 从会话中获取用户
+// 方法的接收者是 session
+// 返回值是 user 和 err
+func (session *Session) User() (user User, err error) {
+	// user 赋值为空
+	user = User{}
+	// 查询users表，条件是id
+	err = Db.QueryRow("select id,uuid,name,email,created_at from users where id = $1", session.UserId).
+		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.CreatedAt)
 	return
 }

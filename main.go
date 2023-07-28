@@ -49,7 +49,8 @@ func main() {
 	// 在 routes 包中的 route_thread.go 中定义
 	// NewThread 显示发布帖子表单页面
 	mux.HandleFunc("/thread/new", routes.NewThread)
-	// mux.HandleFunc("/thread/create",createThread)
+	// CreateThread 创建帖子
+	mux.HandleFunc("/thread/create", routes.CreateThread)
 	// mux.HandleFunc("/thread/post",postThread)
 	// mux.HandleFunc("/thread/read",readThread)
 
