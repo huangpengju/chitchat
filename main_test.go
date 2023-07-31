@@ -27,5 +27,5 @@ func TestFileServer(t *testing.T) {
 	// uuid := "1111"
 	// url := fmt.Sprint("/thread/read?id=", uuid)
 	// fmt.Println("url1===", url)
-
+	// fmt.Println(strings.Count("helloeee", "e"))
 }
