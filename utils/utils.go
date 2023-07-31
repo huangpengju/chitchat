@@ -20,7 +20,7 @@ import (
 // 定义全局变量 logger 日志记录器
 var logger *log.Logger
 
-// Session 检查用户是否登录并有会话，如果不是，err不是nil
+// Session 检查用户是否登录并有会话，如果未登录，err不为nil
 // 返回值 Session 会话 和 err
 // 如果cookie不存在，那么很明显用户并未登陆,用户未登录 err 为 http: named cookie not present（cookie没找到时）
 // 如果cookie存在，那么Session函数将继续进行第二项检查,访问数据库并核实会话的唯一ID是否存在。

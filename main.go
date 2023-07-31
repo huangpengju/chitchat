@@ -53,7 +53,8 @@ func main() {
 	mux.HandleFunc("/thread/create", routes.CreateThread)
 	// PostThread 创建帖子的回复
 	mux.HandleFunc("/thread/post", routes.PostThread)
-	// mux.HandleFunc("/thread/read",readThread)
+	// ReadThread 显示帖子的详细信息
+	mux.HandleFunc("/thread/read", routes.ReadThread)
 
 	server := &http.Server{
 		Addr:    ":8080",

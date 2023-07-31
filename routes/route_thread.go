@@ -1,7 +1,8 @@
 // routes 包的 route_thread.go 用于帖子的处理
 // NewThread 显示发布帖子表单页面
 // CreateThread 创建帖子
-// PostThread 创建回复
+// PostThread 创建回复（评论）
+// ReadThread 显示帖子的详细信息，包括评论和写评论的表单
 package routes
 
 import (
@@ -103,5 +104,28 @@ func PostThread(w http.ResponseWriter, r *http.Request) {
 	} else {
 		// 没有登录时跳转登录页
 		http.Redirect(w, r, "/login", http.StatusFound)
+	}
+}
+
+// GET /thread/read
+// 显示帖子的详细信息，包括评论和写评论的表单
+func ReadThread(w http.ResponseWriter, r *http.Request) {
+	// scheme://[userinfo@]host/path[?query][#fragment]
+	// 获取 RawQuery string // 编码后的查询字符串，没有'?'
+	vals := r.URL.Query()
+	// 获取帖子的uuid
+	uuid := vals.Get("id")
+
+	// 通过UUID获取帖子
+	thread, err := data.ThreadByUUID(uuid)
+	if err != nil {
+		utils.Error_message(w, r, "无法读取帖子")
+	} else {
+		_, err := utils.Session(w, r)
+		if err != nil {
+			utils.GenerateHTML(w, &thread, "layout", "public.navbar", "public.thread")
+		} else {
+			utils.GenerateHTML(w, &thread, "layout", "private.navbar", "private.thread")
+		}
 	}
 }
