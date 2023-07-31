@@ -1,4 +1,8 @@
 // utils 是一个工具类的包
+// 包中 init 是初始化函数
+// 包中 loadConfig 加载配置文件
+// 包中 P 输出 ChitChat 论坛的一些信息
+// 包中 Version 输出 ChitChat 论坛的版本
 // 包中 Session 检查用户是否登录并有会话，如果不是，err不是nil
 // 包中 ParseTemplateFiles 解析登录页的HTML模板
 // 包中 GenerateHTML 根据参数生成 HTML 页面
@@ -9,16 +13,67 @@ package utils
 
 import (
 	"chitchat/data"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
+// 配置
+type Configuration struct {
+	Address       string
+	ReadTimeout   int64
+	WriterTimeout int64
+	Static        string
+}
+
+// 定义全局变量 config 配置
+var Config Configuration
+
 // 定义全局变量 logger 日志记录器
 var logger *log.Logger
+
+func init() {
+	// 加载配置文件
+	loadConfig()
+	file, err := os.OpenFile("chitchat.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalln("日志文件打开失败", err)
+	}
+	logger = log.New(file, "INFO", log.Ldate|log.Ltime|log.Lshortfile)
+}
+
+// loadConfig 加载配置文件
+func loadConfig() {
+	file, err := os.Open("config.json")
+	if err != nil {
+		log.Fatalln("无法打开配置文件:", err)
+	}
+	// 创建一个解码器
+	decoder := json.NewDecoder(file)
+	// 声明一个空的Configuration结构
+	Config = Configuration{}
+	// 读取json并保存在config结构中，返回一个err
+	err = decoder.Decode(&Config)
+	if err != nil {
+		log.Fatalln("无法从文件中获取配置:", err)
+	}
+}
+
+// P 函数方便打印到标准输出
+func P(a ...interface{}) {
+	fmt.Printf("%s", a)
+	// fmt.Println(a)
+}
+
+// Version 显示版本
+func Version() string {
+	return "0.1"
+}
 
 // Session 检查用户是否登录并有会话，如果未登录，err不为nil
 // 返回值 Session 会话 和 err

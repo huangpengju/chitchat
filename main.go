@@ -2,10 +2,15 @@ package main
 
 import (
 	"chitchat/routes"
+	"chitchat/utils"
 	"net/http"
+	"time"
 )
 
 func main() {
+
+	// 打印基本信息
+	utils.P("ChitChat", utils.Version(), "开始", utils.Config.Address)
 
 	// 创建一个多路复用器
 	mux := http.NewServeMux()
@@ -55,8 +60,12 @@ func main() {
 	mux.HandleFunc("/thread/read", routes.ReadThread)
 
 	server := &http.Server{
-		Addr:    ":8080",
-		Handler: mux,
+		Addr:           utils.Config.Address,
+		Handler:        mux,
+		ReadTimeout:    time.Duration(utils.Config.ReadTimeout * int64(time.Second)),
+		WriteTimeout:   time.Duration(utils.Config.WriterTimeout * int64(time.Second)),
+		MaxHeaderBytes: 1 << 20,
 	}
+
 	server.ListenAndServe()
 }
