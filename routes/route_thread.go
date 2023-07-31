@@ -1,10 +1,13 @@
 // routes 包的 route_thread.go 用于帖子的处理
 // NewThread 显示发布帖子表单页面
 // CreateThread 创建帖子
+// PostThread 创建回复
 package routes
 
 import (
+	"chitchat/data"
 	"chitchat/utils"
+	"fmt"
 	"net/http"
 )
 
@@ -59,5 +62,45 @@ func CreateThread(w http.ResponseWriter, r *http.Request) {
 		}
 		// 跳转链接到主页
 		http.Redirect(w, r, "/", http.StatusFound)
+	}
+}
+
+// POST /thread/post
+// 创建回复（评论）
+func PostThread(w http.ResponseWriter, r *http.Request) {
+	// 检查是否登录
+	sess, err := utils.Session(w, r)
+	if err != nil {
+		// 没有登录时跳转登录页
+		http.Redirect(w, r, "/login", http.StatusFound)
+	} else {
+		// 已登录
+		// 先解析表达数据，把结果更新到PostForm
+		err := r.ParseForm()
+		if err != nil {
+			utils.Danger(err, "无法解析表单")
+		}
+		// 根据session 中的UserId，查询用户信息
+		user, err := sess.User()
+		if err != nil {
+			utils.Danger(err, "无法从session中获取用户")
+		}
+		// 获取PostForm中的值
+		body := r.PostFormValue("body") // 评论的内容
+		uuid := r.PostFormValue("uuid") // 帖子的UUID
+
+		// 根据表单中的 uuid 获取帖子信息
+		thread, err := data.ThreadByUUID(uuid)
+		if err != nil {
+			// 未获取到帖子信息，重定向到错误信息页面的方便函数
+			utils.Error_message(w, r, "无法读取帖子")
+		}
+		if _, err := user.CreatePost(thread, body); err != nil {
+			utils.Danger(err, "无法创建评论")
+		}
+		// 设置URL，目的通过 uuid读取帖子
+		url := fmt.Sprint("/thread/read?id=", uuid)
+		// 跳转到指定 URL
+		http.Redirect(w, r, url, http.StatusFound)
 	}
 }

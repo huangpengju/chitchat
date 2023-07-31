@@ -4,6 +4,7 @@
 // 包中 GenerateHTML 根据参数生成 HTML 页面
 // 包中 Warning 函数输出 警告相关的日志
 // 包中 Danger 函数输出风险相关日志
+// 包中 Error_message 重定向到错误信息页面的方便函数
 package utils
 
 import (
@@ -13,6 +14,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 )
 
 // 定义全局变量 logger 日志记录器
@@ -102,4 +104,13 @@ func Warning(args ...interface{}) {
 func Danger(args ...interface{}) {
 	logger.SetPrefix("ERROR")
 	logger.Println(args...)
+}
+
+// Error_message 重定向到错误信息页面的方便函数
+func Error_message(w http.ResponseWriter, r *http.Request, msg string) {
+	// 定义一个string 切片
+	url := []string{"/err?msg=", msg}
+	// 使用 strings.Join() 让 String 切片中的字符串使用""拼接起来
+	// Redirect 重定向到错误信息页面
+	http.Redirect(w, r, strings.Join(url, ""), http.StatusFound)
 }

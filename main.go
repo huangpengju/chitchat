@@ -51,7 +51,8 @@ func main() {
 	mux.HandleFunc("/thread/new", routes.NewThread)
 	// CreateThread 创建帖子
 	mux.HandleFunc("/thread/create", routes.CreateThread)
-	// mux.HandleFunc("/thread/post",postThread)
+	// PostThread 创建帖子的回复
+	mux.HandleFunc("/thread/post", routes.PostThread)
 	// mux.HandleFunc("/thread/read",readThread)
 
 	server := &http.Server{
