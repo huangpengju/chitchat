@@ -12,7 +12,7 @@ import (
 // 定义帖子的结构
 type Thread struct {
 	Id        int
-	Uuid      int
+	Uuid      string
 	Topic     string
 	UserId    int
 	CreatedAt time.Time

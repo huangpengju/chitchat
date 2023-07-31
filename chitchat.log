@@ -1,0 +1,8 @@
+ERROR2023/07/31 22:51:37 utils.go:161: pq: 对于参数$3,推断出不一致的类型 无法创建会话
+ERROR2023/07/31 22:52:01 utils.go:161: pq: 对于参数$3,推断出不一致的类型 无法创建会话
+ERROR2023/07/31 22:57:16 utils.go:161: pq: 对于参数$3,推断出不一致的类型 无法创建会话
+WARNING2023/07/31 23:02:22 utils.go:155: <nil> 获取cookie失败
+WARNING2023/07/31 23:02:35 utils.go:155: <nil> 获取cookie失败
+WARNING2023/07/31 23:07:42 utils.go:155: <nil> 获取cookie失败
+WARNING2023/07/31 23:10:55 utils.go:155: <nil> 获取cookie失败
+ERROR2023/07/31 23:11:13 utils.go:161: sql: Scan error on column index 1, name "uuid": converting driver.Value type string ("81855ad8-681d-4d86-51e9-1e00167939cb") to a int: invalid syntax 无法创建帖子

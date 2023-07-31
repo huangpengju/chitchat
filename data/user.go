@@ -105,7 +105,7 @@ func UserByEmail(email string) (user User, err error) {
 // 方法返回 session 和 err
 func (user *User) CreateSession() (session Session, err error) {
 	// 准备SQL语句
-	statement := "insert into sessions (uuid,email,user_id,created_at) values($1,$2,$3,$3) returning id,uuid,email,user_id,created_at"
+	statement := "insert into sessions (uuid,email,user_id,created_at) values($1,$2,$3,$4) returning id,uuid,email,user_id,created_at"
 	// 创建一个准备好的状态
 	stmt, err := Db.Prepare(statement)
 	if err != nil {

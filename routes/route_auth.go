@@ -41,7 +41,13 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		// 声明一个Session 会话结构体，并给 Uuid 字段赋值 cookie.Value
 		session := data.Session{Uuid: cookie.Value}
 		// 注销用户，使用 Uuid 作为条件，从数据库中删除会话
-		session.DeleteByUUID()
+		err := session.DeleteByUUID()
+		if err != nil {
+			utils.Warning(err, "删除session失败")
+
+		} else {
+			http.Redirect(w, r, "/", http.StatusFound)
+		}
 	}
 	utils.Warning(err, "获取cookie失败")
 }
