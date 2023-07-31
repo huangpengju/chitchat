@@ -1,31 +1,28 @@
 package main
 
 import (
+	"chitchat/routes"
+	"net/http"
+	"net/http/httptest"
+	"strings"
 	"testing"
 )
 
 func TestFileServer(t *testing.T) {
-	// fmt.Println("_______")
-	// files := http.FileServer(http.Dir("/public"))
-	// fmt.Println(files)
-	// http.Handle("/", files)
-	// http.ListenAndServe(":8080", nil)
-	// fmt.Println("_______")
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", routes.Index)
 
-	// u, err := url.Parse("http://bing.com/search")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(u.Query())
-	// fmt.Println(u.Query().Get("id"))
-	// fmt.Printf("%T", u.Query().Get("id"))
-	// msg := "无法读取帖子"
-	// url := []string{"1", "aaa"}
-	// fmt.Println("url1===", url)
-	// a := strings.Join(url, "")
-	// fmt.Println("url2===", a)
-	// uuid := "1111"
-	// url := fmt.Sprint("/thread/read?id=", uuid)
-	// fmt.Println("url1===", url)
-	// fmt.Println(strings.Count("helloeee", "e"))
+	w := httptest.NewRecorder()
+
+	r, _ := http.NewRequest("GET", "/", nil)
+
+	mux.ServeHTTP(w, r)
+
+	if w.Code != 200 {
+		t.Errorf("Response code is%v", w.Code)
+	}
+	body := w.Body.String()
+	if strings.Contains(body, "主页") == false {
+		t.Errorf("Body does not contain 主页")
+	}
 }
