@@ -70,10 +70,7 @@ func CreateThread(w http.ResponseWriter, r *http.Request) {
 func PostThread(w http.ResponseWriter, r *http.Request) {
 	// 检查是否登录
 	sess, err := utils.Session(w, r)
-	if err != nil {
-		// 没有登录时跳转登录页
-		http.Redirect(w, r, "/login", http.StatusFound)
-	} else {
+	if err == nil {
 		// 已登录
 		// 先解析表达数据，把结果更新到PostForm
 		err := r.ParseForm()
@@ -95,6 +92,7 @@ func PostThread(w http.ResponseWriter, r *http.Request) {
 			// 未获取到帖子信息，重定向到错误信息页面的方便函数
 			utils.Error_message(w, r, "无法读取帖子")
 		}
+		// 使用 user 的方法 CreatePost 创建评论
 		if _, err := user.CreatePost(thread, body); err != nil {
 			utils.Danger(err, "无法创建评论")
 		}
@@ -102,5 +100,8 @@ func PostThread(w http.ResponseWriter, r *http.Request) {
 		url := fmt.Sprint("/thread/read?id=", uuid)
 		// 跳转到指定 URL
 		http.Redirect(w, r, url, http.StatusFound)
+	} else {
+		// 没有登录时跳转登录页
+		http.Redirect(w, r, "/login", http.StatusFound)
 	}
 }
