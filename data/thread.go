@@ -30,9 +30,18 @@ type Post struct {
 
 // Threads 获取数据库中所有的帖子并返回
 func Threads() (threads []Thread, err error) {
-
-	threads = []Thread{{Id: 1, Uuid: 1, Topic: "这是侯三", UserId: 1, CreatedAt: time.Now()}, {Id: 2, Uuid: 2, Topic: "李四李四", UserId: 2, CreatedAt: time.Now()}}
-
+	rows, err := Db.Query("select id,uuid,topic,user_id,created_at from threads order by created_at desc")
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		conv := Thread{}
+		if err = rows.Scan(&conv.Id, &conv.Uuid, &conv.Topic, &conv.UserId, &conv.CreatedAt); err != nil {
+			return
+		}
+		threads = append(threads, conv)
+	}
+	// threads = []Thread{{Id: 1, Uuid: 1, Topic: "这是侯三", UserId: 1, CreatedAt: time.Now()}, {Id: 2, Uuid: 2, Topic: "李四李四", UserId: 2, CreatedAt: time.Now()}}
 	return
 }
 

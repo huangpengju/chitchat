@@ -1,8 +1,10 @@
 // routes包中的route_main.go 用于授权相关的处理
 // 包中 Err 显示错误消息页面
+// Index 处理器函数 (帖子列表)
 package routes
 
 import (
+	"chitchat/data"
 	"chitchat/utils"
 	"net/http"
 )
@@ -39,3 +41,44 @@ func Err(w http.ResponseWriter, r *http.Request) {
 		utils.GenerateHTML(w, vals.Get("msg"), "layout", "private.navbar", "error")
 	}
 }
+
+// Index 处理器函数(帖子列表)
+// 负责生成 HTML 并将其写入 ResponseWriter 中
+func Index(w http.ResponseWriter, r *http.Request) {
+	// 获取全部的帖子
+	threads, err := data.Threads()
+	if err != nil {
+		utils.Error_message(w, r, "无法获取帖子")
+	} else {
+		// 检查用户是否登录并有会话，如果未登录，err不为nil
+		_, err := utils.Session(w, r)
+		if err != nil {
+			utils.GenerateHTML(w, threads, "layout", "public.navbar", "index")
+		} else {
+			utils.GenerateHTML(w, threads, "layout", "private.navbar", "index")
+		}
+	}
+}
+
+// // index 处理器函数
+// // 负责生成 HTML 并将其写入 ResponseWriter 中
+// func index(w http.ResponseWriter, r *http.Request) {
+// 	// 定义 files 模板切片 存放 布局文件、标题文件、主页文件路径
+// 	files := []string{"templates/layout.html",
+// 		"templates/public.navbar.html",
+// 		"templates/index.html"}
+
+// 	// ParseFiles 分析文件
+// 	// 创建一个模板，并解析 files 指定的文件里的模板定义，
+// 	// 返回的模板的名字是第一个文件的文件名（不含扩展名）,内容为解析后的第一个文件的内容。
+// 	// Must 用于包装返回 模板指针
+// 	templates := template.Must(template.ParseFiles(files...))
+
+// 	// 查询所有帖子
+// 	threads, err := data.Threads()
+// 	if err != nil {
+// 		return
+// 	}
+// 	// 让 templates 关联的名为 layout 模板产生输出 threads 帖子
+// 	templates.ExecuteTemplate(w, "layout", threads)
+// }

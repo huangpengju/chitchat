@@ -1,10 +1,8 @@
 package main
 
 import (
-	"chitchat/data"
 	"chitchat/routes"
 	"net/http"
-	"text/template"
 )
 
 func main() {
@@ -25,9 +23,9 @@ func main() {
 	// 在其他文件中定义的路由处理函数
 	//
 
-	// index（main,后期转移）
+	// Index (帖子列表)
 	// 把给定的 URL 请求转发至 index 处理器函数
-	mux.HandleFunc("/", index)
+	mux.HandleFunc("/", routes.Index)
 
 	// 在 routes 包中的 route_main.go 中定义
 	// Err 判断用户是否登陆（检查cookie和session会话）
@@ -61,27 +59,4 @@ func main() {
 		Handler: mux,
 	}
 	server.ListenAndServe()
-}
-
-// index 处理器函数
-// 负责生成 HTML 并将其写入 ResponseWriter 中
-func index(w http.ResponseWriter, r *http.Request) {
-	// 定义 files 模板切片 存放 布局文件、标题文件、主页文件路径
-	files := []string{"templates/layout.html",
-		"templates/public.navbar.html",
-		"templates/index.html"}
-
-	// ParseFiles 分析文件
-	// 创建一个模板，并解析 files 指定的文件里的模板定义，
-	// 返回的模板的名字是第一个文件的文件名（不含扩展名）,内容为解析后的第一个文件的内容。
-	// Must 用于包装返回 模板指针
-	templates := template.Must(template.ParseFiles(files...))
-
-	// 查询所有帖子
-	threads, err := data.Threads()
-	if err != nil {
-		return
-	}
-	// 让 templates 关联的名为 layout 模板产生输出 threads 帖子
-	templates.ExecuteTemplate(w, "layout", threads)
 }
