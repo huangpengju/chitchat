@@ -74,6 +74,15 @@ ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
 当一个用户成功登录以后，服务器必须在后续的请求中标示出这是一个已登录的用户。 为了做到这一点，`服务器`会在响应的首部中写入一个` cookie `，而`客户端`在接收这个` cookie `之后则会把它存储到浏览器里面。
 
 ## 5.使用模板生成HTML响应
+* ` HTML `文件包含了特定的嵌入命令，这些命令被称为`动作`（action），动作在` HTML `文件里面会被` {{ `和` }} `包围。
+* ` ParseFiles `函数对` HTML `模板文件进行语法分析，并创建出相应的模板。
+* ` Must `函数捕捉` ParseFiles `函数语法分析过程中可能会产生的错误。  
+```bash
+tmpl_files := []string{"layout.html"
+                       "index.html"}
+templates := template.Must(template.ParseFiles(tmpl_files...))
+```
+用` Must `函数去包围` ParseFiles `函数的执行结果，这样当 ParseFiles 返回错误的时候，Must 函数就会向用户返回相应的错误报告。
 
 ## 6.安装PostgreSQL
 
@@ -81,7 +90,7 @@ ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
 
 ## 8.启动服务器
 
-## 2.9Web应用运作流程图
+## 9.Web应用运作流程图
 
 
 ## 技能清单
