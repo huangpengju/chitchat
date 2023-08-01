@@ -75,14 +75,15 @@ ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
 
 ## 5.使用模板生成HTML响应
 * ` HTML `文件包含了特定的嵌入命令，这些命令被称为`动作`（action），动作在` HTML `文件里面会被` {{ `和` }} `包围。
-* ` ParseFiles `函数对` HTML `模板文件进行语法分析，并创建出相应的模板。
-* ` Must `函数捕捉` ParseFiles `函数语法分析过程中可能会产生的错误。  
+` ParseFiles `函数对` HTML `模板文件进行语法分析，并创建出相应的模板。
+` Must `函数捕捉` ParseFiles `函数语法分析过程中可能会产生的错误。  
 ```bash
 tmpl_files := []string{"layout.html"
                        "index.html"}
 templates := template.Must(template.ParseFiles(tmpl_files...))
 ```
 用` Must `函数去包围` ParseFiles `函数的执行结果，这样当 ParseFiles 返回错误的时候，Must 函数就会向用户返回相应的错误报告。
+define
 
 ## 6.安装PostgreSQL
 
