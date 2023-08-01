@@ -119,7 +119,6 @@ func Authenticate(w http.ResponseWriter, r *http.Request) {
 	// Encrypt() 用于密码加密
 	if user.Password == data.Encrypt(r.PostFormValue("password")) {
 		// 密码正确
-
 		// 创建会话,成功返回session和nil
 		session, err := user.CreateSession()
 		if err != nil {

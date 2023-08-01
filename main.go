@@ -17,7 +17,7 @@ func main() {
 
 	// 服务静态文件
 	// 准备 /public 目录的HTTP处理器
-	files := http.FileServer(http.Dir("/public"))
+	files := http.FileServer(http.Dir(utils.Config.Static))
 	//
 	// 把 "/static" 和 处理器files 注册到多路复用器
 	// StripPrefix 会把 URL中 /static/ 去除后  再让 files 处理器处理请求
