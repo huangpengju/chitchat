@@ -134,9 +134,10 @@ if err == nil{
 * **创建数据库**  
 学习地址：https://www.runoob.com/postgresql/postgresql-create-database.html  
 （1）使用`CREATE DATABASE 库名`SQL 语句来创建。  
-（2）使用`createdb`命令来创建。（注：进入到 PostgreSQL 的安装目录，并进入到 bin 目录）  
+（2）使用`createdb`命令来创建。（注：需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录）  
 （3）使用`pgAdmin`来创建。
 * **创建数据库表**  
+创建`setup.sql`文件，输入下面语句：
 ```
 // users 表
 create table users (
@@ -179,6 +180,15 @@ create table posts (
     created_at timestamp not null
 );
 ```
+* 使用psql工具（随着 PostgreSQL 一同安装），运行上面的`setup.sql`文件。
+```
+psql -U postgres -d chitchat -f C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql 
+```
+**注**：`psql`工具需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录（D:\PostgreSQL\bin）  
+`-U postgres`是选择数据库当前的用户“postgres”  
+`-d chitchat`是选择当前数据库“chitchat”  
+`-f`是执行脚本文件，后面跟脚本文件路径。比如：`C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql`
+
 ## 8.启动服务器
 
 ## 9.Web应用运作流程图
