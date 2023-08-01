@@ -1,4 +1,4 @@
-// data 包的 user.go 用于数据库交互用户相关数据
+// data 包的 user.go 用于保存所有用户相关代码
 // 包中 Check 检查会话在数据库中是否有效
 // 包中 DeleteByUUID 从数据库sessions表中删除会话
 // 包中 Create 创建一个新用户，将用户信息保存到数据库中

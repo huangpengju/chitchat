@@ -1,4 +1,5 @@
-// data 包的 thread.go 用于数据库交互帖子相关数据
+// data 包的 thread.go 用于保存所有帖子相关代码
+// data 包除了包含与数据库交互的结构和代码，还包含了一些与数据处理密切相关的函数。
 // 包中 Threads 获取数据库中所有的帖子并返回
 // 包中 CreateThread 创建一个新帖子
 // 包中 ThreadByUUID 通过UUID获取帖子
@@ -9,7 +10,7 @@ import (
 	"time"
 )
 
-// 定义帖子的结构
+// 定义 Thread 结构，与创建关系数据库表 threads 时使用的数据定义语言（DDL）保持一致。
 type Thread struct {
 	Id        int
 	Uuid      string
