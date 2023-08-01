@@ -124,12 +124,61 @@ if err == nil{
     templates.ExecuteTemplate(writer,"layout",threads)
 }
 ```
-**点号（.）**代表的就是传入到模板里面的数据。
+**点号**（.）代表的就是传入到模板里面的数据。
 
 ## 6.安装PostgreSQL
+下载地址：https://www.enterprisedb.com/downloads/postgres-postgresql-downloads  
+安装教学：https://www.runoob.com/postgresql/windows-install-postgresql.html
 
 ## 7.连接数据库
-
+* **创建数据库**  
+学习地址：https://www.runoob.com/postgresql/postgresql-create-database.html  
+（1）使用`CREATE DATABASE 库名`SQL 语句来创建。  
+（2）使用`createdb`命令来创建。（注：进入到 PostgreSQL 的安装目录，并进入到 bin 目录）  
+（3）使用`pgAdmin`来创建。
+* **创建数据库表**  
+```
+// users 表
+create table users (
+    id serial primary key,
+    uuid varchar(64) not null unique,
+    name varchar(255),
+    email varchar(255) not null unique,
+    password varchar(255) not null,
+    created_at timestamp not null
+);
+```
+```
+// session 表
+create table session (
+    id serial primary key,
+    uuid varchar(64) not null unique,
+    email varchar(255),
+    user_id integer references users(ie),
+    created_at timestamp not null
+);
+```
+```
+// threads 表
+create table threads (
+    id serial primary key,
+    uuid varchar(64) not null unique,
+    topic text,
+    user_id integer references users(id),
+    create_at timestamp not null
+);
+```
+```
+// posts 表
+create table posts (
+    id serial primary key,
+    uuid varchar(64) not null unique,
+    body text,
+    user_id integer references users(id),
+    thread_id integer references thread(id),
+    created_at timestamp not null
+);
+```
 ## 8.启动服务器
 
 ## 9.Web应用运作流程图
