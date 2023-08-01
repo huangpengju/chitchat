@@ -78,10 +78,9 @@ ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
 
 `ParseFiles`函数对`HTML`模板文件进行语法分析，并创建出相应的模板。  
 `Must`函数捕捉`ParseFiles`函数语法分析过程中可能会产生的错误。  
-对`layout.html`和`index.html`两个HTML文件进行语法分析，创建`templates`模板，如法如下：
+如果对`layout.html`和`index.html`两个HTML文件进行语法分析，并创建`templates`模板，代码如下：
 ```bash
-tmpl_files := []string{"layout.html"
-                       "index.html"}
+tmpl_files := []string{"layout.html","index.html"}
 templates := template.Must(template.ParseFiles(tmpl_files...))
 ```
 用`Must`函数去包围`ParseFiles`函数的执行结果，这样当 ParseFiles 返回错误的时候，Must 函数就会向用户返回相应的错误报告。
@@ -92,11 +91,11 @@ templates := template.Must(template.ParseFiles(tmpl_files...))
 
 * 模板文件里面还可以包含若干个用于`引用其他模板文件`的`template`动作。跟在`被引用模板名字`之后的`点 (.)`代表了传递给被引用模板的`数据`。
 
-如果在`layout`模板中引用`navbar`模板，并传递相关数据。那么，`layout.html`文件中的`引用模板并传递数据`的语法如下：
+如果在`layout`模板中引用`navbar`模板，并传递相关数据。那么，`layout.html`文件中的`引用模板并传递数据`的代码如下：
 ```bash
 {{ template "navbar" . }}
 ```
-上面的语句除了会在出现的位置进入`navbar`模板之外，还会将传递给`layout`模板的数据传递给`navbar`模板。
+上面的语句除了会在出现的位置引入`navbar`模板之外，还会将传递给`layout`模板的数据传递给`navbar`模板。
 
 ## 6.安装PostgreSQL
 
