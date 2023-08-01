@@ -137,7 +137,10 @@ if err == nil{
 （2）使用`createdb`命令来创建。（注：需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录）  
 （3）使用`pgAdmin`来创建。
 * **创建数据库表**  
-创建`setup.sql`文件，输入下面语句：
+（1）创建 SQL 文件  
+（2）使用 psql 工具运行 SQL 文件  
+
+`setup.sql`文件中输入下面语句：
 ```
 // users 表
 create table users (
@@ -148,8 +151,7 @@ create table users (
     password varchar(255) not null,
     created_at timestamp not null
 );
-```
-```
+
 // session 表
 create table session (
     id serial primary key,
@@ -158,8 +160,7 @@ create table session (
     user_id integer references users(ie),
     created_at timestamp not null
 );
-```
-```
+
 // threads 表
 create table threads (
     id serial primary key,
@@ -168,8 +169,7 @@ create table threads (
     user_id integer references users(id),
     create_at timestamp not null
 );
-```
-```
+
 // posts 表
 create table posts (
     id serial primary key,
@@ -180,14 +180,15 @@ create table posts (
     created_at timestamp not null
 );
 ```
-* 使用psql工具（随着 PostgreSQL 一同安装），运行上面的`setup.sql`文件。
+使用 psql 工具（`psql`工具是随着 PostgreSQL 一同安装的）：  
+
+运行上面的创建`setup.sql`文件，需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录（如：“D:\PostgreSQL\bin”），然后输入下面的命令：
 ```
 psql -U postgres -d chitchat -f C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql 
 ```
-**注**：`psql`工具需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录（D:\PostgreSQL\bin）  
-`-U postgres`是选择数据库当前的用户“postgres”  
-`-d chitchat`是选择当前数据库“chitchat”  
-`-f`是执行脚本文件，后面跟脚本文件路径。比如：`C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql`
+`-U postgres`是选择数据库当前的用户“postgres”；  
+`-d chitchat`是选择当前数据库“chitchat”；  
+`-f`是执行脚本文件，后面跟脚本文件路径。比如：`C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql`。  
 
 ## 8.启动服务器
 
