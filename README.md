@@ -78,9 +78,9 @@ ChitChat应用会通过 HandleFunc 函数把请求重定向到处理器函数。
 
 `ParseFiles`函数对`HTML`模板文件进行语法分析，并创建出相应的模板。  
 `Must`函数捕捉`ParseFiles`函数语法分析过程中可能会产生的错误。  
-如果对`layout.html`和`index.html`两个HTML文件进行语法分析，并创建`templates`模板，代码如下：
+如果对`layout.html`、`navbar.html`和`index.html`三个HTML文件进行语法分析，并创建`templates`模板，代码如下：
 ```bash
-tmpl_files := []string{"layout.html","index.html"}
+tmpl_files := []string{"layout.html","navbar.html","index.html"}
 templates := template.Must(template.ParseFiles(tmpl_files...))
 ```
 用`Must`函数去包围`ParseFiles`函数的执行结果，这样当 ParseFiles 返回错误的时候，Must 函数就会向用户返回相应的错误报告。
@@ -88,8 +88,24 @@ templates := template.Must(template.ParseFiles(tmpl_files...))
 * ChitChat 论坛的每个模板文件都定义了一个模板，这种做法并不是强制的，用户也可以在一个`模板文件`里面定义多个`模板`，但模板文件和模板一一对应的做法可以给开发带来方便。  
 
 **定义模板的方式**：在模板文件的`源代码`中使用`define`动作。这个动作通过文件开头的`{{ define "模板名" }}`和文件末尾的`{{ end }}`把被包围的`文本块（代码）`定义成了`模板`的一部分。  
-**注意**：模板和模板文件分别拥有不同的名字也是可行的。比如，模板文件是`index.html`，可以在模板文件中定义`content`模板，也可以定义`index`模板。
+**注意**：模板和模板文件分别拥有不同的名字也是可行的。比如，模板文件是`index.html`，在模板文件中定义的模板，其名字可以是`content`，也可以是`index`，语句如下：
+```bash
+{{ define "content" }}
 
+    <div>
+        ...
+    </div>
+
+{{ end }}
+ 或者 
+{{ define "index" }}
+
+    <div>
+        ...
+    </div>
+
+{{ end }}
+```
 * 模板文件里面还可以包含若干个用于`引用其他模板文件`的`template`动作。跟在`被引用模板名字`之后的`点 (.)`代表了传递给被引用模板的`数据`。
 
 如果在`layout`模板中引用`navbar`模板，并传递相关数据。那么，`layout.html`文件中的`引用模板并传递数据`的语句如下：
@@ -97,6 +113,18 @@ templates := template.Must(template.ParseFiles(tmpl_files...))
 {{ template "navbar" . }}
 ```
 上面的语句除了会在语句出现的位置引入`navbar`模板之外，还会将传递给`layout`模板的数据传递给`navbar`模板。
+* 程序通过调用`ExecuteTemplate`函数，执行（execute）已经经过语法分析的模板。执行模板意味着把模板文件中的内容和来自其他渠道的数据进行合并，然后生成最终的`HTML`内容。
+```bash
+threads,err := data.Threads() // 查询数据库获取数据
+if err == nil{
+    // templates模板 是ParseFile函数和Must函数创建的模板
+    // writer 是 http.ResponseWriter
+    // layout 是模板文件中跟在define后面的模板名
+    // threads 是数据
+    templates.ExecuteTemplate(writer,"layout",threads)
+}
+```
+**点号（.）**代表的就是传入到模板里面的数据。
 
 ## 6.安装PostgreSQL
 
@@ -109,8 +137,8 @@ templates := template.Must(template.ParseFiles(tmpl_files...))
 
 ## 技能清单
 1. 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
-2. XXX
-3. XXX
+2. 函数中的可变参数（variadic function）：参数后面带有3个点（...），是切片类型。意味着函数可接受零个或任意多个值作为参数。
+3. 函数中的参数类型 interface{}：空接口类型意味着该参数可以接受任何类型的值作为输入。
 4. XXX
 
 ## 项目目录结构
