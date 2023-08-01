@@ -124,13 +124,28 @@ if err == nil{
     templates.ExecuteTemplate(writer,"layout",threads)
 }
 ```
-**点号**（.）代表的就是传入到模板里面的数据。
+上述中的 threads 是连接数据库后，把获取的数据库数据存储到 Thread 结构中，并追加到 threads 切片里（threads 具体见`7.连接数据库`）。  
+threads 切片中的数据与模板内容合并，生成最终的 HTML。
+在模板文件中，**点号**（.）代表的就是传入到模板里面的数据。
 
 ## 6.安装PostgreSQL
 下载地址：https://www.enterprisedb.com/downloads/postgres-postgresql-downloads  
 安装教学：https://www.runoob.com/postgresql/windows-install-postgresql.html
 
 ## 7.连接数据库
+* **声明数据结构**
+```
+type Thread struct{
+    Id int
+    Uuid string
+    Topic string
+    UserId int
+    CreatedAt time.Time
+}
+
+...
+
+```
 * **创建数据库**  
 学习地址：https://www.runoob.com/postgresql/postgresql-create-database.html  
 （1）使用`CREATE DATABASE 库名`SQL 语句来创建。  
@@ -186,7 +201,31 @@ psql -U postgres -d chitchat -f C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setu
 `-U postgres`是选择数据库当前的用户“postgres”；  
 `-d chitchat`是选择当前数据库“chitchat”；  
 `-f`是执行脚本文件，后面跟脚本文件路径。比如：`C:/Users/Vcom/Desktop/src/gwp/chitchat/data/setup.sql`。  
-
+* **数据库连接池**  
+定义一个全局变量 Db，全局变量 Db 是一个指针，指向的是代表`连接池的 sql.DB`，后续使用这个 Db 变量来执行数据库操作。
+```
+Var Db *sql.DB
+```
+* **连接数据库**
+```
+Db, err := sql.Open("postgres","user=postgres dbname=chitchat password=Aa_123456 sslmode=disable")
+```
+（1）通过数据库连接池与数据库进行链接；  
+（2）向数据库发送一个 SQL 查询，这个查询将返回一个或多个行作为结果；  
+```
+rows,err := Db.Query("select id,uuid,topic,user_id,created_at from threads order by created_at desc")
+```
+（3）遍历行，为每个行分别创建一个 Thread 结构，首先使用这个结构去存储行中记录的帖子数据，然后将存储了帖子数据的 Thread 结构追加到传入的 threads 切片里面；  
+（4）重复执行步骤 3，直到查询返回的所有行都被遍历完毕为止。
+```
+for rows.Next() {
+    th := Thread{}
+    err = rows.Scan(&th.Id,&th.Uuid,&th.Topic,&th.UserId,&th.CreatedAt)
+    ...
+    threads = append(threads,th)
+}
+rows.Close()
+```
 ## 8.启动服务器
 
 ## 9.Web应用运作流程图
