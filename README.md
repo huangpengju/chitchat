@@ -87,7 +87,7 @@ templates := template.Must(template.ParseFiles(tmpl_files...))
 
 * ChitChat 论坛的每个模板文件都定义了一个模板，这种做法并不是强制的，用户也可以在一个`模板文件`里面定义多个`模板`，但模板文件和模板一一对应的做法可以给开发带来方便。  
 
-模板定义，比如：在` HTML `模板文件的`源代码`中使用` define `动作，这个动作通过文件开头的` {{ define "layout" }} ` 和文件末尾的` {{end}} `把被包围的`文本块（代码）`定义成了` layout 模板`的一部分。
+**定义模板的方式**：在` HTML `模板文件的`源代码`中使用` define `动作，这个动作通过文件开头的` {{ define "layout" }} ` 和文件末尾的` {{ end }} `把被包围的`文本块（代码）`定义成了` layout 模板`的一部分。
 
 ## 6.安装PostgreSQL
 
