@@ -137,10 +137,7 @@ if err == nil{
 （2）使用`createdb`命令来创建。（注：需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录）  
 （3）使用`pgAdmin`来创建。
 * **创建数据库表**  
-（1）创建 SQL 文件  
-（2）使用 psql 工具运行 SQL 文件  
-
-`setup.sql`文件中输入下面语句：
+（1）创建`setup.sql`文件，并输入下面的语句：
 ```
 // users 表
 create table users (
@@ -180,7 +177,7 @@ create table posts (
     created_at timestamp not null
 );
 ```
-使用 psql 工具（`psql`工具是随着 PostgreSQL 一同安装的）：  
+（2）使用 psql 工具运行 SQL 文件（`psql`工具是随着 PostgreSQL 一同安装的）：  
 
 运行上面的创建`setup.sql`文件，需要进入到 PostgreSQL 的安装目录，并进入到 bin 目录（如：“D:\PostgreSQL\bin”），然后输入下面的命令：
 ```
