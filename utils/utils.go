@@ -47,6 +47,11 @@ func init() {
 	logger = log.New(file, "INFO", log.Ldate|log.Ltime|log.Lshortfile)
 }
 
+// func info(args ...interface{}) {
+// 	logger.SetPrefix("INFO")
+// 	logger.Println(args...)
+// }
+
 // loadConfig 加载配置文件
 func loadConfig() {
 	file, err := os.Open("config.json")

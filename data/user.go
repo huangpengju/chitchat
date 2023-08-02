@@ -1,12 +1,12 @@
 // data 包的 user.go 用于保存所有用户相关代码
+//
 // 包中 CreateSession 为现有用户创建一个会话，将用户会话保存到数据库中
 // 包中 Check 检查会话在数据库中是否有效
 // 包中 DeleteByUUID 从数据库sessions表中删除会话
-
+// 包中 User 通过会话获取用户
+//
 // 包中 Create 创建一个新用户，将用户信息保存到数据库中
 // 包中 UserByEmail 从数据库中获取给定电子邮件的单个用户
-
-// 包中 User 从会话中获取用户
 package data
 
 import "time"
@@ -120,7 +120,7 @@ func (user *User) CreateSession() (session Session, err error) {
 	return
 }
 
-// User 从会话中获取用户
+// User 通过会话获取用户
 // 方法的接收者是 session
 // 返回值是 user 和 err
 func (session *Session) User() (user User, err error) {

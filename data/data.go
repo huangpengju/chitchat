@@ -1,4 +1,5 @@
 // data 包的 data.go 用于数据库配置、uuid随机生成、密码加密
+//
 // 包中 init 初始化数据库配置
 // 包中 createUUID 创建一个随机UUID
 // 包中 Encrypt 加密密码

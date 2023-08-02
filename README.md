@@ -268,35 +268,36 @@ rows.Close()
 .
 ├── data
 │   ├── data.go
-│   │   ├── init()
-│   │   ├── createUUID()
-│   │   └── Encrypt()
+│   │   ├── var Db *sql.DB                    // 连接池常量
+│   │   ├── init()                            // 用于返回 DB 初始化连接池
+│   │   ├── createUUID()                      // 用于随机创建 UUID
+│   │   └── Encrypt()                         // 用于密码加密
 │   ├── data_test.go
 │   ├── thread.go
-│   │   ├── Threads()
-│   │   ├── (thread *Thread) User()
-│   │   ├── (thread *Thread) CreatedAtDate()
-│   │   ├── (thread *Thread) NumReplies()
-│   │   ├── (user *User) CreateThread()
-│   │   ├── ThreadByUUID()
-│   │   ├── (thread *Thread) Posts()
-│   │   ├── (post *Post) User()
-│   │   ├── (post *Post) CreatedAtDate()
-│   │   └── (user *User) CreatePost()
+│   │   ├── Threads()                         // 获取数据库中所有的帖子并返回
+│   │   ├── (thread *Thread) User()           // 获取帖子的作者信息
+│   │   ├── (thread *Thread) CreatedAtDate()  // 格式化帖子的 CreatedAt 日期
+│   │   ├── (thread *Thread) NumReplies()     // 统计一个帖子的评论数
+│   │   ├── (user *User) CreateThread()       // 创建一个新帖子
+│   │   ├── ThreadByUUID()                    // 通过UUID查询帖子
+│   │   ├── (thread *Thread) Posts()          // 获取一个帖子的全部评论  
+│   │   ├── (post *Post) User()               // 获取一个评论的作者信息
+│   │   ├── (post *Post) CreatedAtDate()      // 格式化评论的 CreatedAt 日期
+│   │   └── (user *User) CreatePost()         // 创建一个新的评论到一个帖子
 │   ├── thread_test.go
 │   ├── user.go
-│   │   ├── (user *User) CreateSession()
-│   │   ├── (session *Session) Check()
-│   │   ├── (session *Session) DeleteByUUID()
-│   │   ├── (session *Session) User()
+│   │   ├── (user *User) CreateSession()      // 为现有用户创建一个session
+│   │   ├── (session *Session) Check()        // 查询数据库中是否有session
+│   │   ├── (session *Session) DeleteByUUID() // 从数据库sessions表中删除会话
+│   │   ├── (session *Session) User()         // 通过session获取用户
 │   │   ├── 
-│   │   ├── (user *User) Create()
-│   │   ├── 
-│   │   ├── 
+│   │   ├── (user *User) Create()             // 创建一个新用户
 │   │   ├── 
 │   │   ├── 
 │   │   ├── 
-│   │   ├── UserByEmail()
+│   │   ├── 
+│   │   ├── 
+│   │   ├── UserByEmail()                     // 通过邮箱账户查询用户信息
 │   │   └── 
 │   ├── user_test.go
 │   └── setup.sql
@@ -306,10 +307,21 @@ rows.Close()
 │   └── js
 ├── routes
 │   ├── route_auth.go
+│   │   ├── Login()                          // 生成登录页面
+│   │   ├── Authenticate()                   // 实现登录功能
+│   │   ├── Signup()                         // 生成注册页面
+│   │   ├── SignupAccount()                  // 实现注册功能
+│   │   └── Logout()                         // 实现注销登录
 │   ├── route_auth_test.go
 │   ├── route_main.go
+│   │   ├── Index()                          // 论坛首页
+│   │   └── Err()                            // 错误页
 │   ├── route_main_test.go
 │   ├── route_thread.go
+│   │   ├── NewThread()                      // 生成发布帖子的表单页面
+│   │   ├── CreateThread()                   // 实现发布帖子的功能
+│   │   ├── ReadThread()                     // 帖子详情页
+│   │   └── PostThread()                     // 实现评论的功能
 │   └── route_thread_test.go
 ├── templates
 │   ├── error.html
@@ -325,8 +337,19 @@ rows.Close()
 │   └── signup.html
 ├── utils
 │   └── utils.go
-├── config.json
+│   │   ├── init()                           // 初始化函数，加载配置和打开日志
+│   │   ├── loadConfig()                     // 加载配置文件config.json
+│   │   ├── P()                              // 输出项目信息
+│   │   ├── Version()                        // 定义版本
+│   │   ├── Session()                        // 获取cookie,然后查询session
+│   │   ├── ParseTemplateFiles()             // 解析生成登录页模板
+│   │   ├── GenerateHTML()                   // 解析生成其他HTML模板
+│   │   ├── Warning()                        // 输出警告日志
+│   │   ├── Danger()                         // 输出错误日志
+│   │   └── Error_message()                  // 重定向至err页面
+├── config.json                              // 配置文件
 ├── main.go
+│   │   └── main()                           // 程序入口
 ├── main_test.go
 └── README.md
 ```
