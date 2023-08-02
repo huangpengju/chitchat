@@ -2,11 +2,13 @@
 // data 包除了包含与数据库交互的结构和代码，还包含了一些与数据处理密切相关的函数。
 // 包中 Threads 获取数据库中所有的帖子并返回
 // 包中 User 获取帖子的作者信息
-// 包中 CreatedAtDate 格式化帖子的CreatedAt日期，以便在屏幕上显示
+// 包中 CreatedAtDate 格式化帖子的 CreatedAt 日期，以便在屏幕上显示
 // 包中 NumReplies 获取一个帖子的评论数
 // 包中 CreateThread 创建一个新帖子
 // 包中 ThreadByUUID 通过UUID获取帖子
 // 包中 Posts 获取一个帖子的全部评论
+// 包中 User 获取一个评论的作者信息
+// 包中 CreatedAtDate 格式化评论的 CreatedAt 日期，以便在屏幕上显示
 // 包中 CreatePost 创建一个新的评论到一个帖子
 package data
 
@@ -62,7 +64,7 @@ func (thread *Thread) User() (user User) {
 	return
 }
 
-// CreatedAtDate 格式化CreatedAt日期，以便在屏幕上显示
+// CreatedAtDate 格式化帖子的 CreatedAt 日期，以便在屏幕上显示
 // 方法的接收者：thread
 // 返回值：字符串类型的格式化后的时间
 func (thread *Thread) CreatedAtDate() string {
@@ -117,6 +119,8 @@ func ThreadByUUID(uuid string) (conv Thread, err error) {
 }
 
 // Posts 获取一个帖子的全部评论
+// 方法的接收者是：thread
+// 方法的返回值：posts 切片 和 err
 func (thread *Thread) Posts() (posts []Post, err error) {
 	rows, err := Db.Query("select id,uuid,body,user_id,thread_id,created_at from posts where thread_id=$1", thread.Id)
 	if err != nil {
@@ -131,6 +135,22 @@ func (thread *Thread) Posts() (posts []Post, err error) {
 	}
 	rows.Close()
 	return
+}
+
+// User 获取一个评论的作者信息
+// 方法的接收者：post
+// 方法的返回值：user
+func (post *Post) User() (user User) {
+	user = User{}
+	Db.QueryRow("select id,uuid,name,email,created_at from users where id = $1", post.UserId).Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.CreatedAt)
+	return
+}
+
+// CreatedAtDate 格式化评论的 CreatedAt 日期，以便在屏幕上显示
+// 方法的接收者：post
+// 返回值：字符串类型的格式化后的时间
+func (post *Post) CreatedAtDate() string {
+	return post.CreatedAt.Format("2006/01/02 15:04")
 }
 
 // CreatePost创建一个新的评论到一个帖子
