@@ -43,13 +43,13 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		// 注销用户，使用 Uuid 作为条件，从数据库中删除会话
 		err := session.DeleteByUUID()
 		if err != nil {
-			utils.Warning(err, "删除session失败")
+			utils.Warning(err, "注销用户，删除session失败")
 
 		} else {
 			http.Redirect(w, r, "/", http.StatusFound)
 		}
 	}
-	utils.Warning(err, "获取cookie失败")
+	utils.Warning(err, "注销用户，未找到cookie")
 }
 
 // GET /signup
