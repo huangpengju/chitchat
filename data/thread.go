@@ -6,6 +6,7 @@
 // 包中 NumReplies 获取一个帖子的评论数
 // 包中 CreateThread 创建一个新帖子
 // 包中 ThreadByUUID 通过UUID获取帖子
+// 包中 Posts 获取一个帖子的全部评论
 // 包中 CreatePost 创建一个新的评论到一个帖子
 package data
 
@@ -99,7 +100,7 @@ func (user *User) CreateThread(topic string) (conv Thread, err error) {
 	}
 	defer stmt.Close()
 	// 使用QueryRow返回一行，并将返回的id扫描到Thread结构中
-	err = stmt.QueryRow(createUUID(), topic, user.Id, time.Now()).Scan(&conv.Id, &conv.Uuid, &conv.Topic, &conv.UserId, conv.CreatedAt)
+	err = stmt.QueryRow(createUUID(), topic, user.Id, time.Now()).Scan(&conv.Id, &conv.Uuid, &conv.Topic, &conv.UserId, &conv.CreatedAt)
 	return
 
 }
@@ -112,6 +113,23 @@ func ThreadByUUID(uuid string) (conv Thread, err error) {
 	conv = Thread{}
 	err = Db.QueryRow("select id,uuid,topic,user_id,created_at from threads where uuid=$1", uuid).
 		Scan(&conv.Id, &conv.Uuid, &conv.Topic, &conv.UserId, &conv.CreatedAt)
+	return
+}
+
+// Posts 获取一个帖子的全部评论
+func (thread *Thread) Posts() (posts []Post, err error) {
+	rows, err := Db.Query("select id,uuid,body,user_id,thread_id,created_at from posts where thread_id=$1", thread.Id)
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		post := Post{}
+		if err = rows.Scan(&post.Id, &post.Uuid, &post.Body, &post.UserId, &post.ThreadId, &post.CreatedAt); err != nil {
+			return
+		}
+		posts = append(posts, post)
+	}
+	rows.Close()
 	return
 }
 

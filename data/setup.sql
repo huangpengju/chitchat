@@ -35,5 +35,5 @@ create table posts(
     body text,
     user_id integer references users(id),
     thread_id integer references threads(id),
-    create_at timestamp not null
+    created_at timestamp not null
 );
