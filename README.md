@@ -268,10 +268,36 @@ rows.Close()
 .
 ├── data
 │   ├── data.go
+│   │   ├── init()
+│   │   ├── createUUID()
+│   │   └── Encrypt()
 │   ├── data_test.go
 │   ├── thread.go
+│   │   ├── Threads()
+│   │   ├── (thread *Thread) User()
+│   │   ├── (thread *Thread) CreatedAtDate()
+│   │   ├── (thread *Thread) NumReplies()
+│   │   ├── (user *User) CreateThread()
+│   │   ├── ThreadByUUID()
+│   │   ├── (thread *Thread) Posts()
+│   │   ├── (post *Post) User()
+│   │   ├── (post *Post) CreatedAtDate()
+│   │   └── (user *User) CreatePost()
 │   ├── thread_test.go
 │   ├── user.go
+│   │   ├── (user *User) CreateSession()
+│   │   ├── (session *Session) Check()
+│   │   ├── (session *Session) DeleteByUUID()
+│   │   ├── (session *Session) User()
+│   │   ├── 
+│   │   ├── (user *User) Create()
+│   │   ├── 
+│   │   ├── 
+│   │   ├── 
+│   │   ├── 
+│   │   ├── 
+│   │   ├── UserByEmail()
+│   │   └── 
 │   ├── user_test.go
 │   └── setup.sql
 ├── public

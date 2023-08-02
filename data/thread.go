@@ -1,14 +1,18 @@
 // data 包的 thread.go 用于保存所有帖子相关代码
 // data 包除了包含与数据库交互的结构和代码，还包含了一些与数据处理密切相关的函数。
+//
 // 包中 Threads 获取数据库中所有的帖子并返回
 // 包中 User 获取帖子的作者信息
 // 包中 CreatedAtDate 格式化帖子的 CreatedAt 日期，以便在屏幕上显示
 // 包中 NumReplies 获取一个帖子的评论数
+//
 // 包中 CreateThread 创建一个新帖子
+//
 // 包中 ThreadByUUID 通过UUID获取帖子
 // 包中 Posts 获取一个帖子的全部评论
 // 包中 User 获取一个评论的作者信息
 // 包中 CreatedAtDate 格式化评论的 CreatedAt 日期，以便在屏幕上显示
+//
 // 包中 CreatePost 创建一个新的评论到一个帖子
 package data
 
@@ -68,7 +72,7 @@ func (thread *Thread) User() (user User) {
 // 方法的接收者：thread
 // 返回值：字符串类型的格式化后的时间
 func (thread *Thread) CreatedAtDate() string {
-	return thread.CreatedAt.Format("2006/01/02 15:04")
+	return thread.CreatedAt.Format("2006/01/02 15:04:05")
 }
 
 // NumReplies 获取一个帖子的评论数
@@ -150,7 +154,7 @@ func (post *Post) User() (user User) {
 // 方法的接收者：post
 // 返回值：字符串类型的格式化后的时间
 func (post *Post) CreatedAtDate() string {
-	return post.CreatedAt.Format("2006/01/02 15:04")
+	return post.CreatedAt.Format("2006/01/02 15:04:05")
 }
 
 // CreatePost创建一个新的评论到一个帖子

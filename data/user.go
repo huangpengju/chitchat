@@ -1,9 +1,11 @@
 // data 包的 user.go 用于保存所有用户相关代码
+// 包中 CreateSession 为现有用户创建一个会话，将用户会话保存到数据库中
 // 包中 Check 检查会话在数据库中是否有效
 // 包中 DeleteByUUID 从数据库sessions表中删除会话
+
 // 包中 Create 创建一个新用户，将用户信息保存到数据库中
 // 包中 UserByEmail 从数据库中获取给定电子邮件的单个用户
-// 包中 CreateSession 为现有用户创建一个会话，将用户会话保存到数据库中
+
 // 包中 User 从会话中获取用户
 package data
 
@@ -129,3 +131,31 @@ func (session *Session) User() (user User, err error) {
 		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.CreatedAt)
 	return
 }
+
+// Create a new session for an existing user
+// Get the session for an existing user
+// Check if session is valid in the database
+// Delete session from database
+// Get the user from the session
+// Delete all sessions from database
+// Create a new user, save user info into the database
+// Delete user from database
+// Update user information in the database
+// Delete all users from database
+// Get all users in the database and returns it
+// Get a single user given the email
+// Get a single user given the UUID
+
+// 为现有用户创建一个新会话 (user *User) CreateSession()
+// 获取现有用户的会话
+// 检查会话在数据库中是否有效 (session *Session) Check()
+// 从数据库中删除会话 (session *Session) DeleteByUUID()
+// 从会话中获取用户  (session *Session) User()
+// 从数据库中删除所有会话
+// 创建新用户，将用户信息保存到数据库中 (user *User) Create()
+// 从数据库中删除用户
+// 更新数据库中的用户信息
+// 从数据库中删除所有用户
+// 获取数据库中的所有用户并返回它
+// 获得给定电子邮件的单个用户 UserByEmail()
+// 获取给定UUID的单个用户
