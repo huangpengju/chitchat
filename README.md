@@ -270,11 +270,11 @@ rows.Close()
 12. time
 13. _ "github.com/lib/pq"
 
-1. 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
-2. 函数中的可变参数（variadic function）：参数后面带有3个点（...），是切片类型。意味着函数可接受零个或任意多个值作为参数。
-3. 函数中的参数类型 interface{}：空接口类型意味着该参数可以接受任何类型的值作为输入。
-4. PostgreSQL（对象-关系数据库服务器）：开源关系型数据库。
-5. 方法隶属于特定类型的函数，指针、接口以及包括结构在内的所有具名类型都可以拥有自己的方法。通过将`函数与指向结构的指针进行绑定`，可以`创建出一个针对结构的方法`，而`传入方法里面的结构`则称为`接收者`：`方法可以访问接收者`，`也可以修改接收者`。 
+* 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
+* 函数中的可变参数（variadic function）：参数后面带有3个点（...），是切片类型。意味着函数可接受零个或任意多个值作为参数。
+* 函数中的参数类型 interface{}：空接口类型意味着该参数可以接受任何类型的值作为输入。
+* PostgreSQL（对象-关系数据库服务器）：开源关系型数据库。
+* 方法隶属于特定类型的函数，指针、接口以及包括结构在内的所有具名类型都可以拥有自己的方法。通过将`函数与指向结构的指针进行绑定`，可以`创建出一个针对结构的方法`，而`传入方法里面的结构`则称为`接收者`：`方法可以访问接收者`，`也可以修改接收者`。 
 
 ## 项目目录结构
 ### 后端结构树
@@ -380,10 +380,10 @@ rows.Close()
 ![Image text](https://github.com/huangpengju/chitchat/blob/main/image/thread_details.png?raw=true)
 ### 注册页
 ![Image text](https://github.com/huangpengju/chitchat/blob/main/image/signup.png?raw=true)
-### 登录页页
+### 登录页
 ![Image text](https://github.com/huangpengju/chitchat/blob/main/image/login.png?raw=true)
 
-## 项目引用
+## 参考
 **学习书籍**：《Go Web 编程》原名《Go Web Programming》，原书作者——**郑兆雄（Sau SheongChang）**。  
 《Go Web 编程》一书围绕一个网络论坛 作为例子，教授读者如何使用请求处理器、多路复用器、模板引擎、存储系统等核心组件去构建一个 Go Web 应用，然后在该应用的基础上，构建出相应的 Web 服务。
 
