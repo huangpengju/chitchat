@@ -291,10 +291,13 @@ ChitChat 应用的工作流程：
 7. log
 8. math/read
 9. net/http
-10. os
-11. strings
-12. time
-13. _ "github.com/lib/pq"
+10. net/http/httptest
+11. os
+12. strings
+13. testing
+14. time
+14. _ "github.com/lib/pq"
+
 
 * 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
 * 函数中的可变参数（variadic function）：参数后面带有3个点（...），是切片类型。意味着函数可接受零个或任意多个值作为参数。
