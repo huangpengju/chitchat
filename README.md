@@ -315,6 +315,11 @@ rows.Close()
 │   │   └── 
 │   ├── user_test.go
 │   └── setup.sql
+├── image
+│   ├── index.png                             // 主页预览图
+│   ├── thread_details.png                    // 详情页预览图
+│   ├── signup.png                            // 注册页预览图
+│   └── login.png                             // 登录页预览图
 ├── public
 │   ├── css
 │   ├── fonts
@@ -371,6 +376,12 @@ rows.Close()
 ## 项目预览图
 ### 主页
  ![Image text](https://github.com/huangpengju/chitchat/blob/main/image/index.png?raw=true)
+### 帖子详情页
+![Image text](https://github.com/huangpengju/chitchat/blob/main/image/thread_details.png?raw=true)
+### 注册页
+![Image text](https://github.com/huangpengju/chitchat/blob/main/image/signup.png?raw=true)
+### 登录页页
+![Image text](https://github.com/huangpengju/chitchat/blob/main/image/login.png?raw=true)
 
 ## 项目引用
 **学习书籍**：《Go Web 编程》原名《Go Web Programming》，原书作者——**郑兆雄（Sau SheongChang）**。  
