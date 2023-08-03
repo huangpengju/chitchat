@@ -256,6 +256,20 @@ rows.Close()
 
 
 ## 技能清单
+1. crypto/sha1
+2. database/sql
+3. encoding/json
+4. errors
+5. fmt
+6. html/template
+7. log
+8. math/read
+9. net/http
+10. os
+11. strings
+12. time
+13. _ "github.com/lib/pq"
+
 1. 多路复用器（multiplexer）：会对请求进行检查，并将请求重定向至正确的处理器进行处理。
 2. 函数中的可变参数（variadic function）：参数后面带有3个点（...），是切片类型。意味着函数可接受零个或任意多个值作为参数。
 3. 函数中的参数类型 interface{}：空接口类型意味着该参数可以接受任何类型的值作为输入。
