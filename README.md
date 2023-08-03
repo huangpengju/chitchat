@@ -383,8 +383,9 @@ rows.Close()
 ### 登录页
 ![Image text](https://github.com/huangpengju/chitchat/blob/main/image/login.png?raw=true)
 
-## 参考
-**学习书籍**：《Go Web 编程》原名《Go Web Programming》，原书作者——**郑兆雄（Sau SheongChang）**。  
+## 项目参考
+### 书籍
+**《Go Web 编程》** 原名《Go Web Programming》，原书作者——**郑兆雄（Sau SheongChang）**。  
 《Go Web 编程》一书围绕一个网络论坛 作为例子，教授读者如何使用请求处理器、多路复用器、模板引擎、存储系统等核心组件去构建一个 Go Web 应用，然后在该应用的基础上，构建出相应的 Web 服务。
 
 **源码地址**：https://github.com/sausheong/gwp
