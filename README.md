@@ -409,13 +409,13 @@ ChitChat 应用的工作流程如下：
 
 ## 项目预览图
 ### 主页
- ![Image text](https://github.com/huangpengju/chitchat/blob/main/public/image/index.png?raw=true)
+ ![Image text](https://github.com/huangpengju/chitchat/main/public/image/index.png?raw=true)
 ### 帖子详情页
-![Image text](https://github.com/huangpengju/chitchat/blob/main/public/image/thread_details.png?raw=true)
+![Image text](https://github.com/huangpengju/chitchat/main/public/image/thread_details.png?raw=true)
 ### 注册页
-![Image text](https://github.com/huangpengju/chitchat/blob/main/public/image/signup.png?raw=true)
+![Image text](https://github.com/huangpengju/chitchat/main/public/image/signup.png?raw=true)
 ### 登录页
-![Image text](https://github.com/huangpengju/chitchat/blob/main/public/image/login.png?raw=true)
+![Image text](https://github.com/huangpengju/chitchat/main/public/image/login.png?raw=true)
 
 ## 项目参考
 ### 书籍
