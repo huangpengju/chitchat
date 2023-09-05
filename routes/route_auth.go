@@ -11,6 +11,7 @@ package routes
 import (
 	"chitchat/data"
 	"chitchat/utils"
+	"fmt"
 	"net/http"
 )
 
@@ -92,6 +93,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	// 并将结果既更新到r.PostForm也更新到r.Form。
 	err := r.ParseForm()
 	if err != nil {
+		fmt.Println("解析表单数据失败")
 		utils.Danger(err, "无法分析表单")
 	}
 	// User结构
@@ -112,7 +114,12 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	// Create 创建一个新用户，将用户信息保存到数据库中
 	// 创建失败 返回 err (err不为nil)
 	if err := user.Create(); err != nil {
+		fmt.Println("无法创建用户：", err)
 		utils.Danger(err, "无法创建用户")
+		return
+	} else {
+		fmt.Println("创建用户成功")
+		utils.Warning("创建用户成功")
 	}
 	// 账号注册成功，跳转到登录页
 	// Redirect回复请求一个重定向地址urlStr和状态码code。

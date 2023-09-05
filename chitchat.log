@@ -2,3 +2,9 @@ WARNING2023/08/02 15:42:14 utils.go:155: <nil> 获取cookie失败
 WARNING2023/08/02 15:43:20 utils.go:155: <nil> 获取cookie失败
 WARNING2023/08/02 16:13:23 utils.go:155: <nil> 获取cookie失败
 WARNING2023/08/03 10:39:02 utils.go:160: <nil> 注销用户，未找到cookie
+ERROR2023/09/05 19:13:34 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
+ERROR2023/09/05 19:16:21 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
+ERROR2023/09/05 19:18:05 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
+ERROR2023/09/05 19:19:02 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
+ERROR2023/09/05 19:19:33 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
+WARNING2023/09/05 19:20:23 utils.go:160: 创建用户成功
