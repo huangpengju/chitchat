@@ -114,7 +114,7 @@ func SignupAccount(w http.ResponseWriter, r *http.Request) {
 	// Create 创建一个新用户，将用户信息保存到数据库中
 	// 创建失败 返回 err (err不为nil)
 	if err := user.Create(); err != nil {
-		fmt.Println("无法创建用户：", err)
+		fmt.Println("无法创建用户===", err)
 		utils.Danger(err, "无法创建用户")
 		return
 	} else {

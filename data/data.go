@@ -20,10 +20,13 @@ var Db *sql.DB
 // init 初始化数据库配置
 func init() {
 	var err error
-	Db, err = sql.Open("postgres", "user=postgres dbname=chitchat password=Aa_123456 sslmode=disable")
+	// Db, err = sql.Open("postgres", "user=postgres dbname=chitchat password=Aa_123456 sslmode=disable")   // windows 环境
+	Db, err = sql.Open("postgres", "postgres://root:123456@192.168.240.240:5432/chitchat?sslmode=disable") // Linux 环境
 	if err != nil {
+		fmt.Println("数据库链接失败：", err)
 		log.Fatal(err)
 	}
+	fmt.Println("数据库连接成功~")
 }
 
 // 从RFC 4122创建一个随机UUID
