@@ -1,6 +1,7 @@
 package main
 
 import (
+	"chitchat/data"
 	"chitchat/routes"
 	"chitchat/utils"
 	"net/http"
@@ -11,7 +12,7 @@ func main() {
 
 	// 打印基本信息
 	utils.P("ChitChat", utils.Version(), "开始", utils.Config.Address)
-
+	data.Init(utils.Config.SQLType, utils.Config.SQLUser, utils.Config.SQLPassword, utils.Config.SQLHost, utils.Config.SQLPort, utils.Config.SQLDb)
 	// 创建一个多路复用器
 	mux := http.NewServeMux()
 

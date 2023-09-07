@@ -29,6 +29,12 @@ type Configuration struct {
 	ReadTimeout   int64
 	WriterTimeout int64
 	Static        string
+	SQLType       string
+	SQLUser       string
+	SQLPassword   string
+	SQLHost       string
+	SQLPort       string
+	SQLDb         string
 }
 
 // 定义全局变量 config 配置

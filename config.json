@@ -2,5 +2,11 @@
     "Address":"0.0.0.0:9000",
     "ReadTimeout":10,
     "WriteTimeout":600,
-    "static":"public"
+    "static":"public",
+    "SQLType":"postgres",
+    "SQLUser":"postgres",
+    "SQLPassword":"Aa_123456",
+    "SQLHost":"127.0.0.1",
+    "SQLPort":"5432",
+    "SQLDb":"chitchat"
 }

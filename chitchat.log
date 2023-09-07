@@ -8,3 +8,5 @@ ERROR2023/09/05 19:18:05 utils.go:166: pq: 重复键违反唯一约束"users_ema
 ERROR2023/09/05 19:19:02 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
 ERROR2023/09/05 19:19:33 utils.go:166: pq: 重复键违反唯一约束"users_email_key" 无法创建用户
 WARNING2023/09/05 19:20:23 utils.go:160: 创建用户成功
+ERROR2023/09/07 09:47:41 utils.go:172: sql: no rows in result set 找不到用户
+WARNING2023/09/07 09:50:20 utils.go:166: <nil> 注销用户，未找到cookie
