@@ -17,7 +17,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	// 获取全部的帖子
 	threads, err := data.Threads()
 	if err != nil {
-		utils.Error_message(w, r, "无法获取帖子")
+		utils.Error_message(w, r, "无法获取内容")
 	} else {
 		// 检查用户是否登录并有会话，如果未登录，err不为nil
 		_, err := utils.Session(w, r)

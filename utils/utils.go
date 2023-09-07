@@ -77,7 +77,7 @@ func loadConfig() {
 
 // P 函数方便打印到标准输出
 func P(a ...interface{}) {
-	fmt.Printf("%s", a)
+	fmt.Printf("%s \n", a)
 	// fmt.Println(a)
 }
 

@@ -4,8 +4,12 @@ import (
 	"chitchat/data"
 	"chitchat/routes"
 	"chitchat/utils"
+	"log"
 	"net/http"
+	"syscall"
 	"time"
+
+	"github.com/fvbock/endless"
 )
 
 func main() {
@@ -60,13 +64,26 @@ func main() {
 	// ReadThread 显示帖子的详细信息
 	mux.HandleFunc("/thread/read", routes.ReadThread)
 
-	server := &http.Server{
-		Addr:           utils.Config.Address,
-		Handler:        mux,
-		ReadTimeout:    time.Duration(utils.Config.ReadTimeout * int64(time.Second)),
-		WriteTimeout:   time.Duration(utils.Config.WriterTimeout * int64(time.Second)),
-		MaxHeaderBytes: 1 << 20,
-	}
+	// server := &http.Server{
+	// 	Addr:           utils.Config.Address,
+	// 	Handler:        mux,
+	// 	ReadTimeout:    time.Duration(utils.Config.ReadTimeout * int64(time.Second)),
+	// 	WriteTimeout:   time.Duration(utils.Config.WriterTimeout * int64(time.Second)),
+	// 	MaxHeaderBytes: 1 << 20,
+	// }
 
-	server.ListenAndServe()
+	// 优雅地重启
+	endless.DefaultReadTimeOut = time.Duration(utils.Config.ReadTimeout * int64(time.Second))
+	endless.DefaultWriteTimeOut = time.Duration(utils.Config.WriterTimeout * int64(time.Second))
+	endless.DefaultMaxHeaderBytes = 1 << 20
+
+	server := endless.NewServer(utils.Config.Address, mux)
+	server.BeforeBegin = func(add string) {
+		log.Printf("现在的 pid 是== %d", syscall.Getpid())
+
+	}
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Printf("服务器错误：%v", err)
+	}
 }
